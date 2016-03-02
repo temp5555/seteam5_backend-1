@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+    <body>
+        <div>
+            <h2> Pending student info </h2>
+        </div>
+        {% for student in pending %}
+        <div id="studentinfo" phonenumber="{{student.phonenumber}}">
+                {% for k, v in student.items() %}
+                    <label>{{k}}</label>&nbsp; <em>{{v}}</em>
+                {% endfor %}
+                <button>Approve</button>
+                <button>Decline</button>
+            </div>
+        {% endfor %}
+            <h2> Approved student info </h2>
+            <!--
+               -todo
+               -->
+            <h2> Declined student info </h2>
+    </body>
+</html>

@@ -27,3 +27,9 @@ def get_userinfo(phonenumber):
     if '_id' in info:
         info.pop('_id', None)
     return info
+
+
+def get_students_info(**kwargs):
+    db = client.backend
+    rows = db.userinfo.find(**kwargs)
+    return rows
