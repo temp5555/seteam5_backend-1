@@ -29,7 +29,14 @@ def get_userinfo(phonenumber):
     return info
 
 
-def get_students_info(**kwargs):
+def get_students_info(query):
     db = client.backend
-    rows = db.userinfo.find(**kwargs)
+    rows = db.userinfo.find(query)
     return rows
+
+
+def update_student_info(updated_info):
+    db = client.backend
+    db.userinfo.update({'phonenumber': updated_info['phonenumber']},
+                       {'$set': {'status': updated_info['status']}},
+                       True)

@@ -1,25 +1,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html>
+    <head>
+    <style>
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color:#D8E7D6;
+}
+th {
+    background-color: #21A957;
+    color: white;
+} 
+
+
+    </style>
+    <script>
+function update(phonenumber, status_)
+{
+    var url = "admin_student_status.html";
+    var params = "phonenumber=" + phonenumber + "&status=" + status_;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.send(params);
+    location.reload();
+}
+
+
+    </script>
+    </head>
     <body>
         <div>
             <h2> Pending student info </h2>
         </div>
         {% for student in pending %}
-        <div id="studentinfo" phonenumber="{{student.phonenumber}}">
+        <div class="studentinfo">
                 {% for k, v in student.items() %}
                     <label>{{k}}</label>&nbsp; <em>{{v}}</em>
                 {% endfor %}
-                <button>Approve</button>
-                <button>Decline</button>
+                <button onclick="update({{student['phonenumber']}}, 'aproove')">aproove</button>
+                <button onclick="update({{student['phonenumber']}}, 'decline')">decline</button>
             </div>
         {% endfor %}
-            <h2> Approved student info </h2>
-            <!--
-               -todo
-               -->
+            <h2> aprooved student info </h2>
+        {% for student in approoved %}
+        <div class="studentinfo">
+                {% for k, v in student.items() %}
+                    <label>{{k}}</label>&nbsp; <em>{{v}}</em>
+                {% endfor %}
+            </div>
+        {% endfor %}
             <h2> Declined student info </h2>
-            <!--
-               -todo
-               -->
+        {% for student in declined %}
+        <div class="studentinfo">
+                {% for k, v in student.items() %}
+                    <label>{{k}}</label>&nbsp; <em>{{v}}</em>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </body>
 </html>
