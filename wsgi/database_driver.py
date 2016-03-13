@@ -28,6 +28,11 @@ def get_userinfo(phonenumber):
         info.pop('_id', None)
     return info
 
+def add_route(phonenumber,route):
+	db = client.backend
+	info={}
+	info[phonenumber] = route
+	return db.routeinfo.insert_one(info)
 
 def get_students_info(query):
     db = client.backend
