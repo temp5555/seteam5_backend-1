@@ -45,6 +45,9 @@ def admin_student_status():
     return render_template('admin_student_status.html', pending=pending,
                            approoved=approoved, declined=declined)
 
+@app.route('/map.html')
+def map():
+    return render_template("map.html")
 
 @app.route('/admin_student_status.html', methods=['POST'])
 def admin_student_status_update():
