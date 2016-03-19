@@ -1,64 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
-<html>
-    <head>
-    <style>
 
-.table tbody tr:hover td, .table tbody tr:hover th {
-    background-color:#D8E7D6;
-}
-th {
-    background-color: #21A957;
-    color: white;
-} 
+  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+  <html>
 
+ <head>
+<script>
+var l=[];
+</script>
+ </head>
 
-    </style>
-    <script>
-function update(phonenumber, status_)
-{
-    var url = "admin_student_status.html";
-    var params = "phonenumber=" + phonenumber + "&status=" + status_;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
+      <body>
+          <div>
+              <h2> Pending student info </h2>
+          </div>
+          {% for student in pending %}
 
-    //Send the proper header information along with the request
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          <div id="studentinfo" phonenumber="{{student.phonenumber}}">
+                  {% for k, v in student.items() %}
+                      <label>{{k}}</label>&nbsp; <em>{{v}}</em>
+                  {% endfor %}
+                  <button>Approve</button>
 
-    xhr.send(params);
-    location.reload();
-}
+                 <button onclick = "ok.innerHTML=('{{student.name}}{{student.phonenumber}}{{student.location}}')" >decline </button>
+                 <button onclick = "alert('{{student.location}}')" >pp </button>
+                 <script>
+                 l.push("'{{student.location}}'");
+                 localStorage.setItem("vv",JSON.stringify(l));
 
+                </script>
 
-    </script>
-    </head>
-    <body>
-        <div>
-            <h2> Pending student info </h2>
-        </div>
-        {% for student in pending %}
-        <div class="studentinfo">
-                {% for k, v in student.items() %}
-                    <label>{{k}}</label>&nbsp; <em>{{v}}</em>
-                {% endfor %}
-                <button onclick="update({{student['phonenumber']}}, 'aproove')">aproove</button>
-                <button onclick="update({{student['phonenumber']}}, 'decline')">decline</button>
-            </div>
-        {% endfor %}
-            <h2> aprooved student info </h2>
-        {% for student in approoved %}
-        <div class="studentinfo">
-                {% for k, v in student.items() %}
-                    <label>{{k}}</label>&nbsp; <em>{{v}}</em>
-                {% endfor %}
-            </div>
-        {% endfor %}
-            <h2> Declined student info </h2>
-        {% for student in declined %}
-        <div class="studentinfo">
-                {% for k, v in student.items() %}
-                    <label>{{k}}</label>&nbsp; <em>{{v}}</em>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </body>
-</html>
+                 <br>
+              </div>
+          {% endfor %}
+
+          <a href ="map.html">Visualize on map</a>
+
+             <h2> Approved student info </h2>
+
+              <h2> Declined student info </h2>
+             <!--
+                -todo
+                -->
+             <div id= "ok"></div>
+      </body>
+  </html>
