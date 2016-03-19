@@ -6,7 +6,7 @@ if URL:
     client = pymongo.MongoClient(URL)
 else:
     client = pymongo.MongoClient("localhost", 27017)
-
+client.drop_database("backend")
 
 def post_userinfo(userinfo):
     db = client.backend
@@ -14,7 +14,7 @@ def post_userinfo(userinfo):
     for k, v in userinfo.items():
         info[k] = v
     return db.userinfo.insert_one(info)
-
+#put location as a val
 
 def get_userinfo(phonenumber):
     db = client.backend
@@ -28,20 +28,8 @@ def get_userinfo(phonenumber):
         info.pop('_id', None)
     return info
 
-def add_route(phonenumber,route):
-	db = client.backend
-	info={}
-	info[phonenumber] = route
-	return db.routeinfo.insert_one(info)
 
-def get_students_info(query):
+def get_students_info(**kwargs):
     db = client.backend
-    rows = db.userinfo.find(query)
+    rows = db.userinfo.find(**kwargs)
     return rows
-
-
-def update_student_info(updated_info):
-    db = client.backend
-    db.userinfo.update({'phonenumber': updated_info['phonenumber']},
-                       {'$set': {'status': updated_info['status']}},
-                       True)
