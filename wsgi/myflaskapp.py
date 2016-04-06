@@ -54,5 +54,22 @@ def admin_student_status_update():
     database_driver.update_student_info(update)
     return '', 200
 
+
+@app.route('/route_manage.html')
+def manage_route_html():
+    unassigned_students = database_driver.get_unassigned_students()
+    return render_template('route_manage.html',
+                           unassigned_students=unassigned_students)
+
+
+@app.route('/register_token/', methods=['POST'])
+def register_token():
+    return jsonify(request.form)
+
+
+@app.route('/send_message/', methods=['POST'])
+def send_message():
+    return jsonify(request.form)
+
 if __name__ == '__main__':
     app.run(debug=True)

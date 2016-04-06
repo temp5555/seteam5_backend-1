@@ -28,11 +28,13 @@ def get_userinfo(phonenumber):
         info.pop('_id', None)
     return info
 
-def add_route(phonenumber,route):
-	db = client.backend
-	info={}
-	info[phonenumber] = route
-	return db.routeinfo.insert_one(info)
+
+def add_route(phonenumber, route):
+    db = client.backend
+    info = {}
+    info[phonenumber] = route
+    return db.routeinfo.insert_one(info)
+
 
 def get_students_info(query):
     db = client.backend
@@ -45,3 +47,9 @@ def update_student_info(updated_info):
     db.userinfo.update({'phonenumber': updated_info['phonenumber']},
                        {'$set': {'status': updated_info['status']}},
                        True)
+
+
+def get_unassigned_students():
+    db = client.backend
+    rows = db.userinfo.find({"route": {"$exists": False}})
+    return rows
