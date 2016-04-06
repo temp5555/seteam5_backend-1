@@ -67,6 +67,7 @@ def register_token():
     return jsonify(request.form)
 
 
+
 @app.route('/send_message/', methods=['POST'])
 def send_message():
     return jsonify(request.form)
