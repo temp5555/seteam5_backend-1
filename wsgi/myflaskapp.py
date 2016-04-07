@@ -72,5 +72,9 @@ def register_token():
 def send_message():
     return jsonify(request.form)
 
+@app.route('/google94f9878b0eb7c516.html')
+def verify():
+    return render_template('google94f9878b0eb7c516.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
