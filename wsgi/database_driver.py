@@ -53,3 +53,21 @@ def get_unassigned_students():
     db = client.backend
     rows = db.userinfo.find({"route": {"$exists": False}})
     return rows
+
+
+def register_token(phonenumber, token):
+    db = client.backend
+    data = {'phonenumber': phonenumber,
+            'token': token,
+            }
+    db.gcmtokens.update({'phonenumber': phonenumber},
+                        data,
+                        upsert=True)
+
+
+def get_gcm_token(phonenumber):
+    db = client.backend
+    if phonenumber:
+        return db.gcmtokens.find_one({'phonenumber': phonenumber})['token']
+    else:
+        return [i['token'] for i in db.gcmtokens.find()]

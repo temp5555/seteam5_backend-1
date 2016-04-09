@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+import cloud_messaging
 
 import database_driver
 
@@ -26,6 +27,7 @@ def post_userinfo():
 
 @app.route('/userinfo/<phonenumber>', methods=['GET'])
 def get_userinfo(phonenumber):
+    import pdb; pdb.set_trace()
     info = database_driver.get_userinfo(phonenumber)
     if not phonenumber or not info:
         return 'Not found', 404
@@ -64,17 +66,23 @@ def manage_route_html():
 
 @app.route('/register_token/', methods=['POST'])
 def register_token():
-    return jsonify(request.form)
-
+    phonenumber = request.form.get('phonenumber')
+    token = request.form.get('token')
+    database_driver.register_token(phonenumber, token)
+    return 'registered successfully', 200
 
 
 @app.route('/send_message/', methods=['POST'])
 def send_message():
+    from_ = request.form.get('phonenumber')
+    message = request.form.get('message')
+    cloud_messaging.send_message(from_, '', message)
     return jsonify(request.form)
 
-@app.route('/google94f9878b0eb7c516.html')
+
+@app.route('/google95f9878b0eb7c516.html')
 def verify():
     return render_template('google94f9878b0eb7c516.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
