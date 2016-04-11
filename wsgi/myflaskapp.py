@@ -84,5 +84,21 @@ def send_message():
 def verify():
     return render_template('google94f9878b0eb7c516.html')
 
+
+@app.route('/update_user_location/', methods=['POST'])
+def update_user_location():
+    if 'phonenumber' not in request.form:
+        return 'Missing phonenumber', 400
+    info = database_driver.get_userinfo(request.form['phonenumber'])
+    if not info:
+        return 'user does not exist. register first', 409
+    if 'location' not in request.form:
+        return 'location does not exist', 409
+    phonenumber = request.form.get('phonenumber')
+    location = request.form.get('location')
+    if database_driver.update_user_location(phonenumber, location):
+        return 'updated successfully', 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

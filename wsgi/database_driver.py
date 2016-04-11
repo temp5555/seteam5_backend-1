@@ -71,3 +71,11 @@ def get_gcm_token(phonenumber):
         return db.gcmtokens.find_one({'phonenumber': phonenumber})['token']
     else:
         return [i['token'] for i in db.gcmtokens.find()]
+
+
+def update_user_location(phonenumber, location):
+    db = client.backend
+    db.userinfo.update({'phonenumber': phonenumber},
+                       {'$set': {'location': location}},
+                       True)
+    return True
