@@ -27,7 +27,6 @@ def post_userinfo():
 
 @app.route('/userinfo/<phonenumber>', methods=['GET'])
 def get_userinfo(phonenumber):
-    import pdb; pdb.set_trace()
     info = database_driver.get_userinfo(phonenumber)
     if not phonenumber or not info:
         return 'Not found', 404
@@ -98,6 +97,11 @@ def update_user_location():
     location = request.form.get('location')
     if database_driver.update_user_location(phonenumber, location):
         return 'updated successfully', 200
+
+
+@app.route('/emergency/', methods=['POST'])
+def send_emergency_update():
+    pass
 
 
 if __name__ == '__main__':

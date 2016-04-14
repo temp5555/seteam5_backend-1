@@ -8,3 +8,7 @@ def send_message(from_, to_, message):
     data = {'message': message, 'from_': from_}
     registration_ids = database_driver.get_gcm_token(to_)
     gcm.json_request(registration_ids, data)
+
+
+def send_sms(to_, messsage):
+    pass
